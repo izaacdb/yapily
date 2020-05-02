@@ -2,13 +2,15 @@ import api from 'marvel-api'
 import dotenv from 'dotenv'
 import { MarvelResponse } from './interfaces'
 
-dotenv.config()
+dotenv.config({ path: '../.env' })
 
 export const count = 20
 
+console.log(process.env.PUBLIC_KEY)
+
 const marvel = api.createClient({
-  publicKey: process.env.PUBLIC_KEY,
-  privateKey: process.env.PRIVATE_KEY,
+  publicKey: '1e9e03fdc8d585786be50d077f9dc76e',
+  privateKey: '472667cb287d2a0afe7a77ad07e4774fbbba67f6',
 })
 
 export const getCharacters = (index = '0'): Promise<MarvelResponse> => {

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from 'react'
+import React, { FunctionComponent } from 'react'
 import { debounce } from 'lodash'
 import styled from 'styled-components'
 import { white } from '../styles'
@@ -25,7 +25,7 @@ interface Props {
   setSearch: (search: string) => void
 }
 
-// stops synthetic event problems
+// stops loss of synthetic event & event stacking
 let debouncedFn
 
 const onChange = (event, setSearch) => {

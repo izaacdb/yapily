@@ -40,7 +40,7 @@ const Pagination: FunctionComponent<Props> = ({ meta, page }) => {
     <Wrapper>
       {pages.map((_, i) => {
         return (
-          <StyledLink active={+page === i} to={`/characters/${i}`} key={i}>
+          <StyledLink active={+page === i ? 1 : 0} to={`/characters/${i}`} key={i}>
             {i + 1}
           </StyledLink>
         )

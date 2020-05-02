@@ -27,10 +27,13 @@ const Thumb = styled.img`
 const Label = styled.p`
   font-size: 1rem;
   position: absolute;
-  top: 1rem;
-  left: 1rem;
+  top: 0;
+  left: 0;
+  margin: 1rem;
   color: ${white};
   font-weight: bold;
+  padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.3);
 `
 
 interface Props {
