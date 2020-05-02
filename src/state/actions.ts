@@ -2,14 +2,8 @@ import { MarvelResponse } from '../interfaces'
 import { getCharacters } from '../api'
 
 export interface Options {
-  path: string
   count: number
-  index: number
-}
-
-export interface Action {
-  type: ActionType
-  payload: any
+  page: number
 }
 
 export interface Payload {
@@ -18,28 +12,36 @@ export interface Payload {
   errorMessage?: string
 }
 
+export interface Action {
+  type: ActionType
+  payload: Payload
+}
+
 export enum ActionType {
   CHARACTERS_REQUEST_PENDING = '[Characters] Making a request to Marvel API',
   CHARACTERS_REQUEST_SUCCEEDED = '[Characters] Request to Marvel API succeeded',
   CHARACTERS_REQUEST_FAILED = '[Characters] Request to Marvel API failed',
 }
 
-export const charactersRequestPending = (options: Options): Action => {
-  return { type: ActionType.CHARACTERS_REQUEST_PENDING, payload: { options } }
-}
+export const charactersRequestPending = (options: Options): Action => ({
+  type: ActionType.CHARACTERS_REQUEST_PENDING,
+  payload: { options },
+})
 
-export const charactersRequestSuccess = (options: Options, response: MarvelResponse) => {
-  return { type: ActionType.CHARACTERS_REQUEST_SUCCEEDED, payload: { response, options } }
-}
+export const charactersRequestSuccess = (options: Options, response: MarvelResponse) => ({
+  type: ActionType.CHARACTERS_REQUEST_SUCCEEDED,
+  payload: { response, options },
+})
 
-export const charactersRequestFailed = (options: Options, errorMessage: string) => {
-  return { type: ActionType.CHARACTERS_REQUEST_FAILED, payload: { options, errorMessage } }
-}
+export const charactersRequestFailed = (options: Options, errorMessage: string) => ({
+  type: ActionType.CHARACTERS_REQUEST_FAILED,
+  payload: { options, errorMessage },
+})
 
-export function charactersRequestThunk(options: Options) {
+export const charactersRequestThunk = (options: Options) => {
   return (dispatch) => {
     dispatch(charactersRequestPending(options))
-    getCharacters('0').then((response) => {
+    getCharacters(options).then((response) => {
       if (response?.data?.length > 0 && response?.meta) {
         dispatch(charactersRequestSuccess(options, response))
       } else {

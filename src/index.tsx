@@ -5,11 +5,11 @@ import { Provider } from 'react-redux'
 import Routes from './components/Routes'
 import * as serviceWorker from './serviceWorker'
 import { GlobalStyles } from './styles'
-import configureStore from './state/store'
+import { store } from './state/store'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={configureStore()}>
+    <Provider store={store}>
       <GlobalStyles />
       <Routes />
     </Provider>

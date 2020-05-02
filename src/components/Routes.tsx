@@ -4,9 +4,10 @@ import styled from 'styled-components'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Character from '../pages/Character'
 import Characters from '../pages/Characters'
+import { pageWidth } from '../styles'
 
 const Container = styled.div`
-  max-width: 1000px;
+  max-width: ${pageWidth};
   margin: 0 auto;
   overflow: hidden;
 `

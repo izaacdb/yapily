@@ -1,36 +1,56 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { connect } from 'react-redux'
 
-import { simpleAction } from '../state/actions'
-import List from '../components/List'
+import { connect } from 'react-redux'
+import List, { Loading } from '../components/List'
 import Pagination from '../components/Pagination'
-import { count, getCharacters } from '../api'
+
 import { RouteParams } from '../components/Routes'
 import Search from '../components/Search'
+import { charactersRequestThunk } from '../state/actions'
+import { createKey } from '../state/reducer'
+import { MarvelResponse, Meta } from '../interfaces'
 
 interface Props {
-  simpleAction: typeof simpleAction
+  charactersRequestThunk: typeof charactersRequestThunk
+  characters: MarvelResponse
+  page: number
+  pending: boolean
+  meta: Meta
 }
 
-const Characters: FunctionComponent<Props> = ({ simpleAction }) => {
-  const { page } = useParams<RouteParams>()
-  const [{ data, meta }, setResponse] = useState({ data: undefined, meta: undefined })
+const count = 20
+
+const filterCharacters = (characters: MarvelResponse, search: string): MarvelResponse => ({
+  ...characters,
+  data: characters.data.filter((f) => f.name.toLowerCase().includes(search.toLowerCase())),
+})
+
+const Characters: FunctionComponent<Props> = ({ charactersRequestThunk, page, characters, pending, meta }) => {
+  const [filteredCharacters, setFilteredCharacters] = useState(characters)
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    getCharacters('' + +page * count).then((response) => {
-      const filteredResponse = {
-        ...response,
-        data: response.data.filter((f) => f.name.toLowerCase().includes(search.toLowerCase())),
-      }
-      setResponse(filteredResponse)
-    })
-  }, [page, search])
+    if (characters?.data) {
+      setFilteredCharacters(filterCharacters(characters, search))
+    } else if (!pending) {
+      charactersRequestThunk({ count, page })
+    }
+  }, [characters, search, pending, charactersRequestThunk])
+
+  if (!filteredCharacters?.data || filteredCharacters?.data?.length === 0) {
+    return (
+      <>
+        <Search setSearch={setSearch} />
+        <Pagination page={page} meta={meta} />
+        {search ? <Loading>No matching names</Loading> : <Loading>Loading...</Loading>}
+      </>
+    )
+  }
+
+  const { data } = filteredCharacters
 
   return (
     <>
-      <button onClick={simpleAction}>a</button>
       <Search setSearch={setSearch} />
       <Pagination page={page} meta={meta} />
       <List characters={data} />
@@ -38,12 +58,19 @@ const Characters: FunctionComponent<Props> = ({ simpleAction }) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  ...state,
-})
+const mapStateToProps = (state, ownProps) => {
+  const page = parseInt((ownProps.match.params as RouteParams).page)
+  const key = createKey({ count, page })
+  const { [key]: characters, pending, meta } = state.requestReducer
 
-const mapDispatchToProps = (dispatch) => ({
-  simpleAction: () => dispatch(simpleAction()),
-})
+  return {
+    pending,
+    page,
+    characters,
+    meta,
+  }
+}
+
+const mapDispatchToProps = { charactersRequestThunk }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Characters)

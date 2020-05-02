@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { withRouter, useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { highlight, white } from '../styles'
+import { highlight, pageWidth, white } from '../styles'
 import { RouteParams } from '../components/Routes'
 import { getCharacter } from '../api'
 import { Loading } from '../components/List'
@@ -31,7 +31,7 @@ const Back = styled.a`
 `
 
 const Wrapper = styled.div`
-  max-width: 800px;
+  max-width: ${pageWidth};
   min-height: 100vh;
   color: ${white};
   padding: 1rem 0;
@@ -40,7 +40,7 @@ const Wrapper = styled.div`
 
 const Picture = styled.img`
   width: 100%;
-  max-height: 800px;
+  max-height: ${pageWidth};
   margin: 0 auto;
 `
 
@@ -54,7 +54,6 @@ const Character: FunctionComponent<Props> = ({ page, history }) => {
   const [response, setResponse] = useState<MarvelResponse>(undefined)
 
   useEffect(() => {
-    console.log(id)
     getCharacter(id).then(setResponse)
   }, [id])
 

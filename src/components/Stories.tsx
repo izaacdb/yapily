@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
+import { Item } from '../interfaces'
 
 const Heading = styled.h2`
   font-size: 1rem;
@@ -8,15 +9,20 @@ const Heading = styled.h2`
 `
 
 const List = styled.ul``
-const Item = styled.li``
+const Story = styled.li``
 
-const Stories = ({ title, items }) => {
+interface Props {
+  title: string
+  items: Item[]
+}
+
+const Stories: FunctionComponent<Props> = ({ title, items }) => {
   return (
     <>
-      <Heading>Events</Heading>
+      <Heading>{title}</Heading>
       <List>
-        {items.map((item) => (
-          <Item key={item.name}>{item.name}</Item>
+        {items.map((item, i) => (
+          <Story key={item.name + i}>{item.name}</Story>
         ))}
       </List>
     </>

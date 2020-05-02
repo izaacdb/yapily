@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { debounce } from 'lodash'
 import styled from 'styled-components'
-import { white } from '../styles'
+import { black, white } from '../styles'
 
 const Wrapper = styled.ul`
   display: flex;
@@ -16,9 +16,8 @@ const SearchBox = styled.input`
   font-size: 2rem;
   border: 0;
   border-bottom: 0.2rem solid ${white};
-  background: #333;
-  color: #fff;
-  padding: 0 0.5rem;
+  background: ${black};
+  color: ${white};
 `
 
 interface Props {

@@ -30,7 +30,7 @@ const StyledLink = styled(Link)`
 
 interface Props {
   meta: Meta
-  page: string
+  page: number
 }
 
 const Pagination: FunctionComponent<Props> = ({ meta, page }) => {
