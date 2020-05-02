@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { Action, ActionType, Options } from './actions'
 import { Meta } from '../interfaces'
+import { Action, ActionType, Options } from './actions'
 
 interface State {
   pending: boolean
@@ -13,14 +13,14 @@ const initialState: State = {
   meta: undefined,
 }
 
-export const createKey = ({ count, page }: Options) => {
+export const getKey = ({ count, page }: Options) => {
   return `charactersRequest.count:${count}.offset:${page * count}`
 }
 
 const requestReducer = (state: State = initialState, action: Action) => {
   if (action.payload) {
     const opts = action.payload.options
-    const key = createKey(opts)
+    const key = getKey(opts)
     switch (action.type) {
       case ActionType.CHARACTERS_REQUEST_PENDING:
         return {

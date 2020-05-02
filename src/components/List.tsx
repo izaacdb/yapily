@@ -1,16 +1,9 @@
 import React, { FunctionComponent } from 'react'
-import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { highlight, white } from '../styles'
+import styled from 'styled-components'
 import { Datum } from '../interfaces'
+import { white } from '../styles'
 
-export const Loading = styled.div`
-  min-height: 100vh;
-  margin: 1rem 0;
-  padding: 0 1rem;
-  font-size: 2rem;
-  color: ${white};
-`
 const Wrapper = styled.ul`
   min-height: 100vh;
   color: ${white};
@@ -18,6 +11,13 @@ const Wrapper = styled.ul`
   column-gap: 1rem;
   margin: 0 1rem;
   padding: 1rem 0;
+`
+export const Loading = styled.div`
+  min-height: 100vh;
+  margin: 1rem 0;
+  padding: 0 1rem;
+  font-size: 2rem;
+  color: ${white};
 `
 const Thumb = styled.img`
   width: 100%;
@@ -36,6 +36,7 @@ const Label = styled.p`
 `
 
 const Card = styled.div`
+  position: relative;
   margin-bottom: 1rem;
   display: inline-block;
   vertical-align: middle;
@@ -52,17 +53,18 @@ const Card = styled.div`
 
 interface Props {
   characters: Datum[]
+  page: number
 }
 
-const List: FunctionComponent<Props> = ({ characters }) => {
+const List: FunctionComponent<Props> = ({ characters, page }) => {
   if (!characters) {
     return <Loading>Loading...</Loading>
   }
   return (
     <Wrapper>
       {characters.map(({ thumbnail: { path, extension }, name, id }) => (
-        <Link key={id} to={`/character/${id}`}>
-          <Card className="hvr-underline-from-left" style={{ position: 'relative' }}>
+        <Link key={id} to={`/characters/${page}/${id}`}>
+          <Card>
             <Thumb src={`${path}.${extension}`} alt={name} />
             <Label>{name}</Label>
           </Card>

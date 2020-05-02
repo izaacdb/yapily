@@ -1,10 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
 
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import Character from '../pages/Character'
-import Characters from '../pages/Characters'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import styled from 'styled-components'
 import { pageWidth } from '../styles'
+import Character from './Character'
+import Characters from './Characters'
 
 const Container = styled.div`
   max-width: ${pageWidth};
@@ -26,12 +26,15 @@ const Routes = () => {
             <Redirect exact from="/" to="/characters/0" />
           </Route>
           <Route
+            exact
             path="/characters/:page"
             render={(props) => <Characters key={props.match.params.pageid} {...props} />}
           />
-          <Route path="/character/:id">
-            <Character />
-          </Route>
+          <Route
+            exact
+            path="/characters/:page/:id"
+            render={(props) => <Character key={props.match.params.pageid} {...props} />}
+          />
         </Switch>
       </Router>
     </Container>

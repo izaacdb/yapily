@@ -1,22 +1,33 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
-import { withRouter, useParams } from 'react-router-dom'
+import React, { FunctionComponent } from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { highlight, pageWidth, white } from '../styles'
-import { RouteParams } from '../components/Routes'
-import { getCharacter } from '../api'
 import { Loading } from '../components/List'
-import { MarvelResponse } from '../interfaces'
 import Stories from '../components/Stories'
+import { Datum, MarvelResponse } from '../interfaces'
+import { charactersRequestThunk } from '../state/actions'
+import { getKey } from '../state/reducer'
+
+import { highlight, pageWidth, white } from '../styles'
+import { count } from './Characters'
+import { RouteParams } from './Routes'
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  padding: 1rem 1rem;
+  max-width: ${pageWidth};
+  min-height: 100vh;
+  color: ${white};
+`
 
 const Name = styled.h1`
   margin: 1rem 0;
   font-size: 2.5rem;
 `
-
 const Description = styled.p`
   font-size: 1rem;
   margin: 1rem 0;
 `
+
 const Back = styled.a`
   display: inline-block;
   margin: 1rem 0 0;
@@ -30,14 +41,6 @@ const Back = styled.a`
   }
 `
 
-const Wrapper = styled.div`
-  max-width: ${pageWidth};
-  min-height: 100vh;
-  color: ${white};
-  padding: 1rem 0;
-  margin: 0 auto;
-`
-
 const Picture = styled.img`
   width: 100%;
   max-height: ${pageWidth};
@@ -45,22 +48,15 @@ const Picture = styled.img`
 `
 
 interface Props {
-  page: string
+  character: Datum
   history: { goBack: () => void }
 }
 
-const Character: FunctionComponent<Props> = ({ page, history }) => {
-  const { id } = useParams<RouteParams>()
-  const [response, setResponse] = useState<MarvelResponse>(undefined)
-
-  useEffect(() => {
-    getCharacter(id).then(setResponse)
-  }, [id])
-
-  if (!response) {
+const Character: FunctionComponent<Props> = ({ character, history }) => {
+  if (!character) {
+    history.goBack()
     return <Loading>Loading...</Loading>
   }
-  console.log(response.data[0])
   const {
     thumbnail: { path, extension },
     name,
@@ -68,7 +64,7 @@ const Character: FunctionComponent<Props> = ({ page, history }) => {
     stories: { items: storyItems },
     series: { items: seriesItems },
     events: { items: eventItems },
-  } = response.data[0]
+  } = character
 
   return (
     <Wrapper>
@@ -87,5 +83,21 @@ const Character: FunctionComponent<Props> = ({ page, history }) => {
   )
 }
 
-// @ts-ignore
-export default withRouter(Character)
+const mapStateToProps = (state, ownProps) => {
+  const id = parseInt((ownProps.match.params as RouteParams).id)
+  const page = parseInt((ownProps.match.params as RouteParams).page)
+  const key = getKey({ count, page })
+  const { [key]: characters } = state.requestReducer
+  if (characters) {
+    const character = (characters as MarvelResponse).data.find((character) => character.id === id)
+    return { character }
+  } else {
+    return {
+      character: undefined,
+    }
+  }
+}
+
+const mapDispatchToProps = { charactersRequestThunk }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Character)

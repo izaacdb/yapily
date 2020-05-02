@@ -2,10 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
-import Routes from './components/Routes'
+import Routes from './pages/Routes'
 import * as serviceWorker from './serviceWorker'
-import { GlobalStyles } from './styles'
 import { store } from './state/store'
+import { GlobalStyles } from './styles'
 
 ReactDOM.render(
   <React.StrictMode>

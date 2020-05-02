@@ -3,12 +3,12 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import List, { Loading } from '../components/List'
 import Pagination from '../components/Pagination'
-
-import { RouteParams } from '../components/Routes'
 import Search from '../components/Search'
-import { charactersRequestThunk } from '../state/actions'
-import { createKey } from '../state/reducer'
 import { MarvelResponse, Meta } from '../interfaces'
+import { charactersRequestThunk } from '../state/actions'
+import { getKey } from '../state/reducer'
+
+import { RouteParams } from './Routes'
 
 interface Props {
   charactersRequestThunk: typeof charactersRequestThunk
@@ -18,7 +18,7 @@ interface Props {
   meta: Meta
 }
 
-const count = 20
+export const count = 20
 
 const filterCharacters = (characters: MarvelResponse, search: string): MarvelResponse => ({
   ...characters,
@@ -35,7 +35,7 @@ const Characters: FunctionComponent<Props> = ({ charactersRequestThunk, page, ch
     } else if (!pending) {
       charactersRequestThunk({ count, page })
     }
-  }, [characters, search, pending, charactersRequestThunk])
+  }, [characters, search, pending, charactersRequestThunk, page])
 
   if (!filteredCharacters?.data || filteredCharacters?.data?.length === 0) {
     return (
@@ -53,14 +53,14 @@ const Characters: FunctionComponent<Props> = ({ charactersRequestThunk, page, ch
     <>
       <Search setSearch={setSearch} />
       <Pagination page={page} meta={meta} />
-      <List characters={data} />
+      <List page={page} characters={data} />
     </>
   )
 }
 
 const mapStateToProps = (state, ownProps) => {
   const page = parseInt((ownProps.match.params as RouteParams).page)
-  const key = createKey({ count, page })
+  const key = getKey({ count, page })
   const { [key]: characters, pending, meta } = state.requestReducer
 
   return {
