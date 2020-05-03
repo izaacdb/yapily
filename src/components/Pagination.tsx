@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react'
-import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 import { Meta } from '../interfaces'
-import { highlight, white } from '../styles'
+import { teal, white } from '../styles'
 
 const Wrapper = styled.ul`
   margin: 0 1rem;
@@ -17,15 +17,15 @@ const StyledLink = styled(Link)`
   font-size: 1.5rem;
   color: ${white};
   text-decoration: none;
-  border-bottom: 0.2rem solid ${white};
+  border-bottom: 0.3rem solid ${white};
   padding: 0.2rem 0.2rem 0;
   margin-right: 1rem;
   &:hover {
-    border-bottom: 0.2rem ${highlight} solid;
-    color: ${highlight};
+    border-bottom: 0.3rem ${teal} solid;
+    color: ${teal};
   }
-  color: ${({ active }) => (active ? highlight : undefined)};
-  border-bottom-color: ${({ active }) => (active ? highlight : undefined)};
+  color: ${({ active }) => (active ? teal : undefined)};
+  border-bottom-color: ${({ active }) => (active ? teal : undefined)};
 `
 
 interface Props {
@@ -33,14 +33,41 @@ interface Props {
   page: number
 }
 
-const Pagination: FunctionComponent<Props> = ({ meta, page }) => {
-  const pages = meta ? [...Array(Math.ceil(meta.total / meta.limit))] : []
+const pages = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+]
 
+const Pagination: FunctionComponent<Props> = ({ meta, page }) => {
   return (
     <Wrapper>
       {pages.map((_, i) => {
         return (
-          <StyledLink active={+page === i ? 1 : 0} to={`/characters/${i}`} key={i}>
+          <StyledLink disabled={!meta} active={+page === i ? 1 : 0} to={`/characters/${i}`} key={i}>
             {i + 1}
           </StyledLink>
         )

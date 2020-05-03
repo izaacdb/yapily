@@ -1,19 +1,19 @@
 import React, { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Loading } from '../components/List'
+import { Loading } from '../components/Loading'
+
 import Stories from '../components/Stories'
 import { Datum, MarvelResponse } from '../interfaces'
 import { charactersRequestThunk } from '../state/actions'
 import { getKey } from '../state/reducer'
-
-import { highlight, pageWidth, white } from '../styles'
+import { black, pageWidth, teal, white } from '../styles'
 import { count } from './Characters'
 import { RouteParams } from './Routes'
 
 const Wrapper = styled.div`
   margin: 0 auto;
-  padding: 1rem 1rem;
+  padding: 2rem 1rem;
   max-width: ${pageWidth};
   min-height: 100vh;
   color: ${white};
@@ -29,15 +29,16 @@ const Description = styled.p`
 `
 
 const Back = styled.a`
+  font-size: 1.5rem;
   display: inline-block;
-  margin: 1rem 0 0;
+  margin: 1.5rem 0 0;
   color: ${white};
   text-decoration: underline;
-  border-bottom: 0.2rem solid ${white};
+  border-bottom: 0.3rem solid ${white};
   padding: 0;
   &:hover {
-    color: ${highlight};
-    border-bottom: 0.2rem solid ${highlight};
+    color: ${teal};
+    border-bottom: 0.3rem solid ${teal};
   }
 `
 
@@ -45,6 +46,7 @@ const Picture = styled.img`
   width: 100%;
   max-height: ${pageWidth};
   margin: 0 auto;
+  border: 1rem solid ${black};
 `
 
 interface Props {
@@ -55,7 +57,7 @@ interface Props {
 const Character: FunctionComponent<Props> = ({ character, history }) => {
   if (!character) {
     history.goBack()
-    return <Loading>Loading...</Loading>
+    return <Loading>Loading</Loading>
   }
   const {
     thumbnail: { path, extension },

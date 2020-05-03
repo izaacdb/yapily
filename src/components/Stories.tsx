@@ -5,11 +5,13 @@ import { Item } from '../interfaces'
 const Heading = styled.h2`
   font-size: 1rem;
   font-weight: bold;
-  margin: 2rem 0 1rem;
+  margin: 1.5rem 0 1rem;
 `
 
 const List = styled.ul``
-const Story = styled.li``
+const Story = styled.li`
+  line-height: 1.2;
+`
 
 interface Props {
   title: string

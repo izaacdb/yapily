@@ -9,7 +9,6 @@ import Characters from './Characters'
 const Container = styled.div`
   max-width: ${pageWidth};
   margin: 0 auto;
-  overflow: hidden;
 `
 
 export interface RouteParams {

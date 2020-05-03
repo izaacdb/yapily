@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react'
 import { debounce } from 'lodash'
+import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
-import { black, white } from '../styles'
+import { grey, white } from '../styles'
 
 const Wrapper = styled.ul`
   display: flex;
@@ -13,10 +13,10 @@ const Wrapper = styled.ul`
 `
 const SearchBox = styled.input`
   outline: none;
-  font-size: 2rem;
+  font-size: 1.5rem;
   border: 0;
-  border-bottom: 0.2rem solid ${white};
-  background: ${black};
+  border-bottom: 0.3rem solid ${white};
+  background: ${grey};
   color: ${white};
 `
 

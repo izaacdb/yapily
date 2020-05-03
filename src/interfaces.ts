@@ -43,6 +43,7 @@ export interface Url {
 }
 
 export interface Datum {
+  loaded?: boolean
   id: number
   name: string
   description: string

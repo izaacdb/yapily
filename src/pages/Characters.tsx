@@ -1,13 +1,13 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
-
 import { connect } from 'react-redux'
-import List, { Loading } from '../components/List'
+
+import List from '../components/List'
+import { Loading } from '../components/Loading'
 import Pagination from '../components/Pagination'
 import Search from '../components/Search'
 import { MarvelResponse, Meta } from '../interfaces'
 import { charactersRequestThunk } from '../state/actions'
 import { getKey } from '../state/reducer'
-
 import { RouteParams } from './Routes'
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
   meta: Meta
 }
 
-export const count = 20
+export const count = 50
 
 const filterCharacters = (characters: MarvelResponse, search: string): MarvelResponse => ({
   ...characters,
@@ -37,12 +37,22 @@ const Characters: FunctionComponent<Props> = ({ charactersRequestThunk, page, ch
     }
   }, [characters, search, pending, charactersRequestThunk, page])
 
-  if (!filteredCharacters?.data || filteredCharacters?.data?.length === 0) {
+  if (pending || !filteredCharacters?.data) {
     return (
       <>
         <Search setSearch={setSearch} />
         <Pagination page={page} meta={meta} />
-        {search ? <Loading>No matching names</Loading> : <Loading>Loading...</Loading>}
+        <Loading animate>Loading</Loading>
+      </>
+    )
+  }
+
+  if (filteredCharacters?.data?.length === 0) {
+    return (
+      <>
+        <Search setSearch={setSearch} />
+        <Pagination page={page} meta={meta} />
+        <Loading>No matches found</Loading>
       </>
     )
   }
