@@ -5,20 +5,18 @@ import List from '../components/List'
 import { Loading } from '../components/Loading'
 import Pagination from '../components/Pagination'
 import Search from '../components/Search'
-import { MarvelResponse, Meta } from '../interfaces'
+import { MarvelResponse, RouteParams } from '../interfaces'
 import { charactersRequestThunk } from '../state/actions'
 import { getKey } from '../state/reducer'
-import { RouteParams } from './Routes'
 
 interface Props {
   charactersRequestThunk: typeof charactersRequestThunk
   characters: MarvelResponse
-  page: number
+  page: string
   pending: boolean
-  meta: Meta
 }
 
-export const count = 50
+export const count = 100
 
 const filterCharacters = (characters: MarvelResponse, search: string): MarvelResponse => ({
   ...characters,
@@ -69,7 +67,7 @@ const Characters: FunctionComponent<Props> = ({ charactersRequestThunk, page, ch
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const page = parseInt((ownProps.match.params as RouteParams).page)
+  const page = (ownProps.match.params as RouteParams).page
   const key = getKey({ count, page })
   const { [key]: characters, pending, meta } = state.requestReducer
 

@@ -1,27 +1,5 @@
-import { MarvelResponse } from '../interfaces'
-import { getCharacters } from '../api'
-
-export interface Options {
-  count: number
-  page: number
-}
-
-export interface Payload {
-  options: Options
-  response?: MarvelResponse
-  errorMessage?: string
-}
-
-export interface Action {
-  type: ActionType
-  payload: Payload
-}
-
-export enum ActionType {
-  CHARACTERS_REQUEST_PENDING = '[Characters] Making a request to Marvel API',
-  CHARACTERS_REQUEST_SUCCEEDED = '[Characters] Request to Marvel API succeeded',
-  CHARACTERS_REQUEST_FAILED = '[Characters] Request to Marvel API failed',
-}
+import { getCharactersByLetter } from '../api'
+import { Action, ActionType, MarvelResponse, Options } from '../interfaces'
 
 export const charactersRequestPending = (options: Options): Action => ({
   type: ActionType.CHARACTERS_REQUEST_PENDING,
@@ -41,7 +19,7 @@ export const charactersRequestFailed = (options: Options, errorMessage: string) 
 export const charactersRequestThunk = (options: Options) => {
   return (dispatch) => {
     dispatch(charactersRequestPending(options))
-    getCharacters(options).then((response) => {
+    getCharactersByLetter(options).then((response) => {
       if (response?.data?.length > 0 && response?.meta) {
         dispatch(charactersRequestSuccess(options, response))
       } else {

@@ -4,12 +4,11 @@ import styled from 'styled-components'
 import { Loading } from '../components/Loading'
 
 import Stories from '../components/Stories'
-import { Datum, MarvelResponse } from '../interfaces'
+import { Character, MarvelResponse, RouteParams } from '../interfaces'
 import { charactersRequestThunk } from '../state/actions'
 import { getKey } from '../state/reducer'
 import { black, pageWidth, teal, white } from '../styles'
 import { count } from './Characters'
-import { RouteParams } from './Routes'
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -50,7 +49,7 @@ const Picture = styled.img`
 `
 
 interface Props {
-  character: Datum
+  character: Character
   history: { goBack: () => void }
 }
 
@@ -87,7 +86,7 @@ const Character: FunctionComponent<Props> = ({ character, history }) => {
 
 const mapStateToProps = (state, ownProps) => {
   const id = parseInt((ownProps.match.params as RouteParams).id)
-  const page = parseInt((ownProps.match.params as RouteParams).page)
+  const page = (ownProps.match.params as RouteParams).page
   const key = getKey({ count, page })
   const { [key]: characters } = state.requestReducer
   if (characters) {

@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
-import { Meta } from '../interfaces'
-import { Action, ActionType, Options } from './actions'
+import { Action, ActionType, Meta, Options } from '../interfaces'
 
 interface State {
   pending: boolean
@@ -13,8 +12,8 @@ const initialState: State = {
   meta: undefined,
 }
 
-export const getKey = ({ count, page }: Options) => {
-  return `charactersRequest.count:${count}.offset:${page * count}`
+export const getKey = ({ page }: Options) => {
+  return `charactersRequest.${page}`
 }
 
 const requestReducer = (state: State = initialState, action: Action) => {

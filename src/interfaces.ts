@@ -42,7 +42,7 @@ export interface Url {
   url: string
 }
 
-export interface Datum {
+export interface Character {
   loaded?: boolean
   id: number
   name: string
@@ -65,6 +65,33 @@ export interface Meta {
 }
 
 export interface MarvelResponse {
-  data: Datum[]
+  data: Character[]
   meta: Meta
+}
+
+export interface RouteParams {
+  page: string
+  id: string
+}
+
+export interface Options {
+  count: number
+  page: string
+}
+
+export interface Payload {
+  options: Options
+  response?: MarvelResponse
+  errorMessage?: string
+}
+
+export interface Action {
+  type: ActionType
+  payload: Payload
+}
+
+export enum ActionType {
+  CHARACTERS_REQUEST_PENDING = '[Characters] Making a request to Marvel API',
+  CHARACTERS_REQUEST_SUCCEEDED = '[Characters] Request to Marvel API succeeded',
+  CHARACTERS_REQUEST_FAILED = '[Characters] Request to Marvel API failed',
 }

@@ -11,11 +11,6 @@ const Container = styled.div`
   margin: 0 auto;
 `
 
-export interface RouteParams {
-  page: string
-  id: string
-}
-
 const Routes = () => {
   return (
     <Container>

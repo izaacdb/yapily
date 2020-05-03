@@ -5,10 +5,10 @@ import { Meta } from '../interfaces'
 import { teal, white } from '../styles'
 
 const Wrapper = styled.ul`
-  margin: 0 1rem;
-  padding: 0 0 1rem 0;
+  margin: 0 0 0 1rem;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   align-items: center;
   overflow: scroll;
 `
@@ -18,8 +18,10 @@ const StyledLink = styled(Link)`
   color: ${white};
   text-decoration: none;
   border-bottom: 0.3rem solid ${white};
-  padding: 0.2rem 0.2rem 0;
-  margin-right: 1rem;
+  width: 1.5rem;
+  text-align: center;
+  height: 2rem;
+  margin: 0 1rem 1rem 0;
   &:hover {
     border-bottom: 0.3rem ${teal} solid;
     color: ${teal};
@@ -30,7 +32,7 @@ const StyledLink = styled(Link)`
 
 interface Props {
   meta: Meta
-  page: number
+  page: string
 }
 
 const pages = [
@@ -62,13 +64,13 @@ const pages = [
   'z',
 ]
 
-const Pagination: FunctionComponent<Props> = ({ meta, page }) => {
+const Pagination: FunctionComponent<Props> = ({ page }) => {
   return (
     <Wrapper>
-      {pages.map((_, i) => {
+      {pages.map((pg, i) => {
         return (
-          <StyledLink disabled={!meta} active={+page === i ? 1 : 0} to={`/characters/${i}`} key={i}>
-            {i + 1}
+          <StyledLink active={page === pg ? 1 : 0} to={`/characters/${pg}`} key={i}>
+            {pg}
           </StyledLink>
         )
       })}
