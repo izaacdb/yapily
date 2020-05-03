@@ -17,7 +17,7 @@ const Routes = () => {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Redirect exact from="/" to="/characters/0" />
+            <Redirect exact from="/" to="/characters/a" />
           </Route>
           <Route
             exact

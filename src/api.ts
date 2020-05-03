@@ -7,8 +7,8 @@ dotenv.config({ path: '../.env' })
 console.log(process.env.PUBLIC_KEY)
 
 const marvel = api.createClient({
-  publicKey: '07933b3939e6c43444a8d1eb8c4203c7',
-  privateKey: '19e187736b64ad7cfac69c29d96bfaa94c559046',
+  publicKey: process.env.REACT_APP_PUBLIC_KEY,
+  privateKey: process.env.REACT_APP_PRIVATE_KEY,
 })
 
 // export const getCharacters = ({ count, page }: Options): Promise<MarvelResponse> => {
