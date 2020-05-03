@@ -14,7 +14,7 @@ const marvel = api.createClient({
 
 export const getCharacters = ({ count, page }: Options): Promise<MarvelResponse> => {
   // eg. Get 20 characters at page 3, offset 60. Characters 60-80.
-  return marvel.characters.findNameStartsWith('s')
+  return marvel.characters.findAll(count, page * count)
 }
 
 export const getCharacter = (id: string): Promise<MarvelResponse> => {
