@@ -17,6 +17,12 @@ const marvel = api.createClient({
 
 export const getCharactersByLetter = ({ page, count }): Promise<MarvelResponse> => {
   return marvel.characters.findNameStartsWith(page, count).then((res: MarvelResponse) => {
+    console.log(
+      JSON.stringify({
+        ...res,
+        data: res.data.filter((d) => !d.thumbnail.path.includes('image_not_available')),
+      })
+    )
     return {
       ...res,
       data: res.data.filter((d) => !d.thumbnail.path.includes('image_not_available')),

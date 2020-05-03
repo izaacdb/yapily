@@ -23,9 +23,9 @@ const Wrapper = styled(Masonry)`
 
 const Card = styled.div`
   display: inline-block;
-  opacity: ${({ loaded }) => (loaded ? 1 : 0)};
-  ${({ loaded }) =>
-    loaded &&
+  opacity: ${(props) => (props.loaded ? 1 : 0)};
+  ${(props) =>
+    props.loaded &&
     css`
       animation: ${fadeIn} 0.3s linear;
     `};
@@ -40,7 +40,7 @@ const Card = styled.div`
   &:focus,
   &:active {
     z-index: 1;
-    transform: scale(1.15);
+    transform: scale(1.1) rotateZ(-1deg);
   }
 `
 
@@ -69,7 +69,7 @@ const StyledLink = styled(Link)`
   width: 100%;
 `
 
-interface Props {
+export interface Props {
   characters: Character[]
   page: string
 }
@@ -89,7 +89,7 @@ const List: FunctionComponent<Props> = ({ characters, page }) => {
     <Wrapper breakpointCols={breakpointCols} className="masonry-grid" columnClassName="masonry-grid_column">
       {characters.map(({ id, name, thumbnail: { path, extension } }, i) => {
         return (
-          <Card loaded={loaded[i] ? 1 : 0} key={id}>
+          <Card data-testid="list--card" loaded={loaded[i] ? 1 : 0} key={id}>
             <StyledLink to={`/characters/${page}/${id}`}>
               <Thumb
                 onLoad={() => {

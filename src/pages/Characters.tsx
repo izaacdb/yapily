@@ -23,7 +23,7 @@ const filterCharacters = (characters: MarvelResponse, search: string): MarvelRes
   data: characters.data.filter((f) => f.name.toLowerCase().includes(search.toLowerCase())),
 })
 
-const Characters: FunctionComponent<Props> = ({ charactersRequestThunk, page, characters, pending, meta }) => {
+const Characters: FunctionComponent<Props> = ({ charactersRequestThunk, page, characters, pending }) => {
   const [filteredCharacters, setFilteredCharacters] = useState(characters)
   const [search, setSearch] = useState('')
 
@@ -39,8 +39,8 @@ const Characters: FunctionComponent<Props> = ({ charactersRequestThunk, page, ch
     return (
       <>
         <Search setSearch={setSearch} />
-        <Pagination page={page} meta={meta} />
-        <Loading animate>Loading</Loading>
+        <Pagination page={page} />
+        <Loading animate>Loading characters</Loading>
       </>
     )
   }
@@ -49,7 +49,7 @@ const Characters: FunctionComponent<Props> = ({ charactersRequestThunk, page, ch
     return (
       <>
         <Search setSearch={setSearch} />
-        <Pagination page={page} meta={meta} />
+        <Pagination page={page} />
         <Loading>No matches found</Loading>
       </>
     )
@@ -60,7 +60,7 @@ const Characters: FunctionComponent<Props> = ({ charactersRequestThunk, page, ch
   return (
     <>
       <Search setSearch={setSearch} />
-      <Pagination page={page} meta={meta} />
+      <Pagination page={page} />
       <List page={page} characters={data} />
     </>
   )

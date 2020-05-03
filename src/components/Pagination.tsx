@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Meta } from '../interfaces'
 import { teal, white } from '../styles'
 
 const Wrapper = styled.ul`
@@ -31,7 +30,6 @@ const StyledLink = styled(Link)`
 `
 
 interface Props {
-  meta: Meta
   page: string
 }
 

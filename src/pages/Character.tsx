@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Loading } from '../components/Loading'
 
 import Stories from '../components/Stories'
-import { Character, MarvelResponse, RouteParams } from '../interfaces'
+import { Character as ICharacter, MarvelResponse, RouteParams } from '../interfaces'
 import { charactersRequestThunk } from '../state/actions'
 import { getKey } from '../state/reducer'
 import { black, pageWidth, teal, white } from '../styles'
@@ -49,7 +49,7 @@ const Picture = styled.img`
 `
 
 interface Props {
-  character: Character
+  character: ICharacter
   history: { goBack: () => void }
 }
 
