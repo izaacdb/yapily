@@ -3,7 +3,7 @@ Yapily technical test
 
 Passed technical test for financial tech startup Yapily.
 
-![preview](preview.png | width=100)
+<img src="preview.png" alt="preview" width="600"/>
 
 ## How to run
 
