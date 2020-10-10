@@ -1,5 +1,7 @@
-Marvel technical test
+Yapily technical test
 ----
+
+Passed technical test for financial tech startup Yapily.
 
 ![preview](preview.png)
 
