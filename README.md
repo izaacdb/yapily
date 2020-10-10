@@ -3,6 +3,9 @@ Yapily technical test
 
 Passed technical test for financial tech startup Yapily.
 
+	“The Marvel Comics API allows developers to access information about Marvel's vast library of comics.
+     We want you to use the Marvel API to retrieve and display data.”
+
 <img src="preview.png" alt="preview" width="600"/>
 
 ## How to run
@@ -15,10 +18,4 @@ Run `yarn test` to run the test suite.
 
 ## Notes
 
-Ideally this would use a server with some caching as there is a 3000 limit from Marvel, but for now this is fine.
-
 Uses `styled-components` for styling, and `redux` to cache the calls client side.
-
-I pushed the `.env` file also, since the repository is being shared privately.
-
-My email is izaac.broadbent@gmail.com, feel free to reach out any time.
